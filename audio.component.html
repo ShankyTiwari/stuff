@@ -1,0 +1,35 @@
+<div class="audio-player-conatiner">
+
+	<div class="left mat-calendar-body-selected">
+        <button mat-icon-button *ngIf="!isPlaying;else content" class="play fit" (click)="playAudio()">
+            <mat-icon>play_arrow</mat-icon>
+        </button>
+       
+        <ng-template #content>
+            <button mat-icon-button class="pause fit" (click)="pauseAudio()">
+                <mat-icon>pause</mat-icon>
+            </button>
+        </ng-template>
+    </div>
+    
+	<div class="center">
+        <div class="title fit" role="alert">
+            {{ title }}
+        </div>
+        <mat-progress-bar 
+            class="progress-bar" 
+            color="bluevoilet" 
+            value="{{ progressBarValue }}"
+            mat-ripple
+        ></mat-progress-bar>
+    </div>
+
+    <div class="right">
+    	<div class="duration mat-datepicker-toggle-active fit">
+    		<span class="fit" role="timer" 
+                aria-label="Audio Track Length"> {{convertSecToMin()}}
+            </span>
+        </div>
+    </div>
+
+</div>

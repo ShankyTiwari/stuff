@@ -1,0 +1,88 @@
+:host {
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	font-family: 'Roboto Mono', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* CSS for containers starts */
+.audio-player-conatiner {
+	display: flex;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	-ms-flex-direction: row;
+	-webkit-flex-direction: row;
+	flex-direction: row;
+	position: relative;
+	cursor: pointer;
+	height: 50px;
+	box-shadow: 0 1px 2px rgba(0,0,0,.3);
+}
+
+.audio-player-conatiner > .left,
+.audio-player-conatiner > .right {
+	height: 50px;
+	width: 50px;
+	position: relative;
+}
+
+/* .audio-player-conatiner > .left {
+	background-color: #673ab7;
+}  */
+
+.audio-player-conatiner > .right {
+	background-color: rgb(255, 255, 255);
+}
+
+.audio-player-conatiner > .center {
+	-ms-flex: 1;
+	-webkit-flex: 1;
+	flex: 1;
+	position: relative;
+    overflow: hidden;
+    background-color: rgba(255,255,255,.75);
+}
+
+.audio-player-conatiner > .center > .progress-bar{
+	height: 50px;
+	width: 102%;
+	margin-left: -1%;
+}
+
+/* CSS for controls starts */
+.audio-player-conatiner > .left > .play,
+.audio-player-conatiner > .left > .pause{
+	margin: auto;
+	color: #fff;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+}
+
+.audio-player-conatiner > .center > .title {
+	pointer-events: none;
+	font-size: 15px;
+	z-index: 2;
+	color: #fff;
+	font-weight: 600;
+}
+
+/* .audio-player-conatiner > .right > .duration{
+	color: #673ab7;
+} */
+
+/* Common CSS styling starts*/
+.audio-player-conatiner > .center > .title,
+.audio-player-conatiner > .right > .duration {
+	text-align: center;
+	line-height: 50px;
+}
+
+.fit {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
