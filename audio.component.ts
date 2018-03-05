@@ -51,11 +51,15 @@ export class AudioComponent implements OnInit {
 		}
 		this.sliderUpdateInterval = setInterval( () => {
 			if (this.isPlaying) {
-				this.progressBarValue = (this.audio.currentTime / this.audio.duration) * 100;
+				this.setProgressbarValue();
 			} else {
 				clearInterval(this.sliderUpdateInterval);
 			}
 		}, 60);
+	}
+
+	setProgressbarValue(progressBarValue: number): void {
+		this.progressBarValue = (this.audio.currentTime / this.audio.duration) * 100;
 	}
 
 	convertSecToMin() {
@@ -76,9 +80,18 @@ export class AudioComponent implements OnInit {
 			this.audio.src = this.src;
 			this.audio.load();
 			this.audio.oncanplay = () => {
-				resolve();
+				setTimeout( () => {
+					resolve();
+				},1000);
 			};
 		});
+	}
+
+	seek(event){
+		const x = event.x - event.currentTarget.getBoundingClientRect().left;
+		const r = (x / event.currentTarget.getBoundingClientRect().width) * this.audio.duration;
+		this.audio.currentTime = r;
+		this.setProgressbarValue();
 	}
 
 }
