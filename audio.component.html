@@ -1,35 +1,46 @@
 <div class="audio-player-conatiner">
 
 	<div class="left mat-calendar-body-selected">
-        <button mat-icon-button *ngIf="!isPlaying;else content" class="play fit" (click)="playAudio()">
+        <button mat-icon-button 
+            *ngIf="!isPlaying && canPlay" 
+            class="play fit" 
+            (click)="playAudio()">
             <mat-icon>play_arrow</mat-icon>
         </button>
-       
-        <ng-template #content>
-            <button mat-icon-button class="pause fit" (click)="pauseAudio()">
-                <mat-icon>pause</mat-icon>
-            </button>
-        </ng-template>
+
+        <button mat-icon-button 
+            *ngIf="isPlaying && canPlay" 
+            class="pause fit" 
+            (click)="pauseAudio()">
+            <mat-icon>pause</mat-icon>
+        </button>
+
+        <button mat-icon-button 
+            *ngIf="!isPlaying && !canPlay" 
+            class="pause fit" 
+            (click)="pauseAudio()">
+            <mat-icon>error_outline</mat-icon>
+        </button>
     </div>
     
-	<div class="center">
-        /* Pakya yala Add kar starts*/
+	<div class="center" mat-ripple>
+
         <div class="title fit" role="alert">
-            {{ title }}
+            {{ canPlay ? title : "Sorry, the track can't Track : " + title }}
         </div>
-        /* Pakya yala Add kar ends*/
         <mat-progress-bar 
             class="progress-bar" 
             color="bluevoilet" 
             value="{{ progressBarValue }}"
-            mat-ripple
+            [hidden]='!canPlay'
+            (click)="seek($event)"
         ></mat-progress-bar>
     </div>
 
     <div class="right">
     	<div class="duration mat-datepicker-toggle-active fit">
     		<span class="fit" role="timer" 
-                aria-label="Audio Track Length"> {{convertSecToMin()}}
+                aria-label="Audio Track Length"> {{ canPlay ? convertSecToMin() : '--' }}
             </span>
         </div>
     </div>
