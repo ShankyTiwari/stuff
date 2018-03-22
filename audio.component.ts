@@ -93,5 +93,24 @@ export class AudioComponent implements OnInit {
 		this.audio.currentTime = r;
 		this.setProgressbarValue();
 	}
+	
+	/*
+	import {Validators} from '@angular/forms';
+
+	export class AddressLineValidation {
+			constructor() {
+				return [
+					'',
+					Validators.compose(
+						[
+							Validators.pattern(/[\w\s]+/),
+							Validators.required,
+						],
+					),
+				];
+			}
+		}
+
+	*/
 
 }
