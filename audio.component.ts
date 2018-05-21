@@ -110,6 +110,36 @@ export class AudioComponent implements OnInit {
 				];
 			}
 		}
+		
+		import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+
+@Component({
+	selector: 'app-multilevel-list',
+	templateUrl: './multilevel-list.component.html',
+	styleUrls: ['./multilevel-list.component.scss']
+})
+export class MultilevelListComponent implements OnInit {
+	updatedList = [];
+	@Input() list: any;
+	@Output() selectedItem = new EventEmitter<any>();
+	ngOnInit() {
+		if (this.list !== undefined && this.list !== null && this.list !== '' ) {
+			this.list.forEach((item) => {
+				item['expanded'] = false;
+				this.updatedList.push(item);
+			});
+		}
+	}
+
+	expand(item) {
+		item.expanded = !item.expanded;
+		if (item.submenu.length === 0) {
+			delete item.expanded;
+			this.selectedItem.emit(item);
+		}
+	}
+}
+
 
 	*/
 
