@@ -116,7 +116,38 @@ export class AudioComponent implements OnInit {
 @Component({
 	selector: 'app-multilevel-list',
 	templateUrl: './multilevel-list.component.html',
-	styleUrls: ['./multilevel-list.component.scss']
+	styleUrls: ['./multilevel-list.component.scss'],
+	animations: [
+		trigger('divState', [
+			state('in', style({ backgroundColor: 'red', transform: 'translateX(0)' })),
+
+			transition('void => *', [
+				animate(1000, keyframes([
+					style({ opacity: 0, transform: 'translateX(-100%)', offset: 0 }),
+					style({ backgroundColor: '#bee0ff', opacity: 1, transform: 'translateX(15px)', offset: 0.3 }),
+					style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
+				]))
+			]),
+			transition('* => void', [
+				animate(300, keyframes([
+					style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
+					style({ opacity: 1, transform: 'translateX(-15px)', offset: 0.7 }),
+					style({ opacity: 0, transform: 'translateX(100%)', offset: 1.0 })
+				]))
+			])
+		]),
+		trigger('isExpanded', [
+			state('no', style({ transform: 'rotate(0deg)' })),
+			state('yes', style({ transform: 'rotate(-90deg)' })),
+
+			transition('no => yes',
+				animate(300)
+			),
+			transition('yes => no',
+				animate(300)
+			)
+		])
+	]
 })
 export class MultilevelListComponent implements OnInit {
 	updatedList = [];
