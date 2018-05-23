@@ -58,8 +58,8 @@
 					}"
 					(click)="expand(item, level)">
 					<span>{{item.title}}</span>
-					<mat-icon class='expand-indicator' *ngIf='item.submenu.length > 0 && item.expanded'>keyboard_arrow_down</mat-icon>
-					<mat-icon class='expand-indicator' *ngIf='item.submenu.length > 0 && !item.expanded'>keyboard_arrow_right</mat-icon>
+					<mat-icon class='expand-indicator'*ngIf='item.submenu.length > 0' [@isExpanded]="item.submenu.length > 0 && item.expanded ? 'yes' : 'no'">keyboard_arrow_down</mat-icon>
+
 				</div>
 				<ul *ngIf="item.submenu.length > 0 && item.expanded">
 					<ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: item.submenu, level: level + 1 }"></ng-container>
