@@ -1,0 +1,25 @@
+const client = require('redis').createClient()
+
+class Limiter{
+
+    constructor(app){
+        this.limiter = require('express-limiter')(app, client);
+    }
+
+
+    initializeRateLimiter(){
+        this.limiter({
+            path: '/api/',
+            method: 'get',
+            lookup: ['connection.remoteAddress'],
+            // 15 uests per hour
+            total: 150,
+            expire: 1000 * 60 * 60,
+            onRateLimited: function (req, res, next) {
+                next({ message: 'Rate limit exceeded', status: 429 })
+            }
+        })
+    }
+}
+
+module.exports = Limiter;
