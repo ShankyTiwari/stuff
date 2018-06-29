@@ -1,16 +1,15 @@
-<div [ngClass]="getClassName()" [ngStyle]="getGlobalStyle()" *ngIf='filteredNodes.length !== 0'>
+<div [ngClass]="getClassName()" [ngStyle]="getGlobalStyle()" *ngIf='nodes.length !== 0'>
   <mat-list>
-    <ng-list-item *ngFor="let node of filteredNodes" 
+    <ng-list-item *ngFor="let node of nodes" 
       [nodeConfiguration]='nodeConfig'
       [node]='node'
       [selectedNode]='currentNode'
-      [isSelected]='isSelected'
       (selectedItem)="selectedListItem($event)">
     </ng-list-item>
   </mat-list>
 </div>
 
 <!-- <div *ngFor="let node of filteredNodes"> -->
-  <pre>{{currentNode|json}}</pre>
+  <pre>{{nodes|json}}</pre>
   <hr>
 <!-- </div> -->

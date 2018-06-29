@@ -1,4 +1,4 @@
-<mat-list-item matRipple class="amml-item" (click)="expand(node)" [ngStyle]="getListStyle(node)">
+<mat-list-item matRipple class="amml-item"  *ngIf="!node.hidden" (click)="expand(node)" [ngStyle]="getListStyle(node)">
   <div class="anml-data">
     <span *ngIf="node.faIcon" class="amml-icon amml-icon-fa">
       <i [ngClass]="node.faIcon"></i>
@@ -21,7 +21,6 @@
   <ng-list-item *ngFor="let singleNode of nodeChildren" 
     [nodeConfiguration]='nodeConfiguration' 
     [node]='singleNode'
-    [isSelected]='isSelected'
     [selectedNode]='selectedNode'
     (selectedItem)="selectedListItem($event)">
   </ng-list-item>

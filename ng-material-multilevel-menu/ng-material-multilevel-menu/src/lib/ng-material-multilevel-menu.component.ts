@@ -1,8 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { NgMaterialMultilevelMenuService } from './ng-material-multilevel-menu.service';
+
 import { Configuration } from './configuration.model';
 import { MultilevelNodes } from './multilevel-nodes.model';
-import { NavigationNodesEmitter } from './navigation-nodes-emitter.model';
 import { CONSTANT } from './constants';
 
 @Component({
@@ -14,7 +15,6 @@ export class NgMaterialMultilevelMenuComponent implements OnInit {
   @Input() nodes: MultilevelNodes[];
   @Input() configuration: Configuration = null;
   @Output() selectedItem = new EventEmitter<MultilevelNodes>();
-  get filteredNodes() { return this.nodes ? this.nodes.filter(n => !n.hidden) : []; }
   isInvalidConfig = true;
   isSelected = 0;
   currentNode: MultilevelNodes;
@@ -23,14 +23,18 @@ export class NgMaterialMultilevelMenuComponent implements OnInit {
     listBackgroundColor: null,
     fontColor: null
   };
-  constructor() { }
+  constructor(
+    private ngMaterialMultilevelMenuService: NgMaterialMultilevelMenuService
+  ) { }
   ngOnInit() {
     this.checkValiddata();
     this.detectInvalidConfig();
   }
   checkValiddata() {
-    if (this.filteredNodes.length === 0) {
+    if (this.nodes.length === 0) {
       console.warn(CONSTANT.ERROR_MESSAGE);
+    } else {
+      this.ngMaterialMultilevelMenuService.addRandomId(this.nodes);
     }
   }
   detectInvalidConfig(): void {

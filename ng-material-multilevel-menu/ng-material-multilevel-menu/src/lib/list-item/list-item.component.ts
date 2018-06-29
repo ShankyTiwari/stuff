@@ -1,10 +1,12 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { trigger, style, transition, animate, state, group } from '@angular/animations';
 
+import { NgMaterialMultilevelMenuService } from './../ng-material-multilevel-menu.service';
+
+
 import { Configuration } from './../configuration.model';
 import { MultilevelNodes } from './../multilevel-nodes.model';
-import { NavigationNodesEmitter } from './../navigation-nodes-emitter.model';
-import { CONSTANT } from '../constants';
+import { CONSTANT } from './../constants';
 
 @Component({
   selector: 'ng-list-item',
@@ -44,19 +46,30 @@ import { CONSTANT } from '../constants';
 export class ListItemComponent implements OnChanges {
   @Input() node: MultilevelNodes;
   @Input() selectedNode: MultilevelNodes;
-  @Input() isSelected: boolean;
   @Input() nodeConfiguration: Configuration = null;
   @Output() selectedItem = new EventEmitter<MultilevelNodes>();
+  isSelected = false;
   nodeChildren: MultilevelNodes[];
+  constructor(
+    private ngMaterialMultilevelMenuService: NgMaterialMultilevelMenuService
+  ) { }
   ngOnChanges() {
+    console.log(this.selectedNode);
     this.nodeChildren = this.node && this.node.items ? this.node.items.filter(n => !n.hidden) : [];
-    if (this.node !== undefined && this.selectedNode !== undefined) {
-      const compareWith = this.node.items ? this.node.items : [];
-      const ix = compareWith.indexOf(this.selectedNode);
-      this.isSelected = ix !== -1;
-    } else {
-      this.isSelected = false;
+    if (this.selectedNode !== undefined) {
+      this.ngMaterialMultilevelMenuService.recursiveCheckId(this.node, this.selectedNode.id);
+      this.ngMaterialMultilevelMenuService.isMatchFound.subscribe((matched) => {
+        this.isSelected =  true;
+      });
     }
+    // if (this.node !== undefined && this.selectedNode !== undefined) {
+    //   const compareWith = this.node.items ? this.node.items : [];
+    //  // console.log(this.selectedNode, this.node.label);
+    //   const ix = compareWith.indexOf(this.selectedNode);
+    //   this.isSelected = ix !== -1;
+    // } else {
+    //   this.isSelected = false;
+    // }
   }
 
   getPaddingAtStart() {
